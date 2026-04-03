@@ -1,8 +1,4 @@
-"""
-Task 03: Decision Tree Classifier — Bank Marketing Dataset
-Predict whether a customer will subscribe to a term deposit (y: yes/no).
-Dataset: UCI Bank Marketing (simulated here; replace with real CSV as needed)
-"""
+
 
 import pandas as pd
 import numpy as np
@@ -17,7 +13,7 @@ from sklearn.metrics import (classification_report, confusion_matrix,
 import warnings
 warnings.filterwarnings('ignore')
 
-# ── 1. Load / Simulate Dataset ───────────────────────────────────────────────
+# 1. Load Dataset 
 print("=" * 60)
 print("TASK 03 — Decision Tree Classifier (Bank Marketing)")
 print("=" * 60)
@@ -55,7 +51,7 @@ except FileNotFoundError:
 print(f"\n── Shape: {df.shape}")
 print("── Target distribution:\n", df['y'].value_counts())
 
-# ── 2. Data Preparation ───────────────────────────────────────────────────────
+#  2. Data Preparation 
 df_enc = df.copy()
 le = LabelEncoder()
 cat_cols = df_enc.select_dtypes(include='object').columns.tolist()
@@ -70,7 +66,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print(f"\n── Train size: {X_train.shape[0]}  |  Test size: {X_test.shape[0]}")
 
-# ── 3. Train Decision Tree ────────────────────────────────────────────────────
+#  3. Train Decision Tree 
 dt = DecisionTreeClassifier(max_depth=5, min_samples_split=10,
                              min_samples_leaf=5, random_state=42)
 dt.fit(X_train, y_train)
@@ -85,7 +81,7 @@ print("\n── Classification Report:\n", classification_report(y_test, y_pred,
 cv_scores = cross_val_score(dt, X, y, cv=5, scoring='accuracy')
 print(f"── 5-Fold CV Accuracy: {cv_scores.mean()*100:.2f}% ± {cv_scores.std()*100:.2f}%")
 
-# ── 4. Visualisations ─────────────────────────────────────────────────────────
+#  4. Visualisations 
 BG = '#1e1e2e'
 plt.rcParams.update({'figure.facecolor': BG, 'axes.facecolor': BG,
                      'text.color': 'white', 'axes.labelcolor': 'white',
@@ -94,7 +90,7 @@ plt.rcParams.update({'figure.facecolor': BG, 'axes.facecolor': BG,
 
 fig = plt.figure(figsize=(20, 18))
 
-# 4a. Decision Tree (top 3 levels)
+# 4a. Decision Tree 
 ax1 = fig.add_subplot(2, 2, (1, 2))
 ax1.set_facecolor('white')
 plot_tree(dt, feature_names=X.columns, class_names=['No', 'Yes'],
